@@ -3,6 +3,7 @@ require('dotenv').config();
 const sequelize = require('./db');
 const cors = require('cors');
 const router = require('./routes/index');
+const errorHandler = require('./middleware/ErrorHandlingMiddleware');
 
 sequelize.sync();
 const app = express();
@@ -10,6 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api', router);
+
+//must be after all routes
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 const start = async () => {
