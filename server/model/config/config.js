@@ -25,8 +25,8 @@ Device.belongsTo(Brand);
 Device.hasMany(BasketDevice);
 BasketDevice.belongsTo(Device);
 
-Device.hasMany(DeviceInfo);
-DeviceInfo.belongsTo(Device);
+Device.hasMany(DeviceInfo, {as: "info"});
+DeviceInfo.belongsTo(Device, { foreignKey: "deviceId" });
 
 Type.belongsToMany(Brand, {through: TypeBrand});
 Brand.belongsToMany(Type, {through: TypeBrand});
