@@ -7,7 +7,7 @@ const router = require('./routes/index');
 const errorHandler = require('./middleware/error/ErrorHandlingMiddleware');
 const fileUpload = require('express-fileupload');
 const path = require('path');
-const RefreshToken = require('./model/RefreshToken');
+const setupAssociations = require('./model/associations/setupAssociations');
 
 const app = express();
 
@@ -27,6 +27,7 @@ const start = async () => {
     try {
         await sequelize.authenticate(); // connect to database
         await sequelize.sync(); // compares db state with data schema
+        setupAssociations(); // setup associations
         app.listen(PORT, () => console.log("Server is running on port ", PORT ));
     } catch (e) {
         console.log(e);
