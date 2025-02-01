@@ -2,15 +2,17 @@ const express = require('express');
 require('dotenv').config();
 const sequelize = require('./db');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const router = require('./routes/index');
-const errorHandler = require('./middleware/ErrorHandlingMiddleware');
+const errorHandler = require('./middleware/error/ErrorHandlingMiddleware');
 const fileUpload = require('express-fileupload');
 const path = require('path');
+const RefreshToken = require('./model/RefreshToken');
 
-sequelize.sync()
 const app = express();
 
 app.use(cors());
+app.use(cookieParser());
 app.use(fileUpload({}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

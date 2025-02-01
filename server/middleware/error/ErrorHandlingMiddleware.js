@@ -1,4 +1,4 @@
-const ApiError = require('../error/ApiError');
+const ApiError = require('../../error/ApiError');
 
 module.exports = (err, req, res, next) => {
     if (err instanceof ApiError) {

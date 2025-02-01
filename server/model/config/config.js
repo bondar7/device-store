@@ -7,12 +7,16 @@ const Rating = require('../Rating');
 const Type = require('../Type');
 const Brand = require('../Brand');
 const TypeBrand = require('../TypeBrand');
+const RefreshToken = require('../RefreshToken');
 
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
 User.hasMany(Rating);
 Rating.belongsTo(User);
+
+User.hasMany(RefreshToken);
+RefreshToken.belongsTo(User);
 
 Basket.hasMany(BasketDevice);
 BasketDevice.belongsTo(Basket);
