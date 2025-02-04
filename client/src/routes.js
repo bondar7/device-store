@@ -8,15 +8,18 @@ import Register from "./pages/Register";
 
 export const authRoutes = [
     {
-        path: ADMIN_ROUTE,
-        Component: <Admin/>,
-        exact: true
-    },
-    {
         path: BASKET_ROUTE,
         Component: <Basket/>,
         exact: true
     }
+]
+
+export const adminRoutes = [
+    {
+        path: ADMIN_ROUTE,
+        Component: <Admin/>,
+        exact: true
+    },
 ]
 
 export const publicRoutes = [

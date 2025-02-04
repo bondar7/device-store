@@ -33,8 +33,8 @@ module.exports = async (req, res, next) => {
                     token: newRefreshToken
                 });
                 //send new tokens
-                res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', partitioned: true, secure: true});
-                res.json({message: newAccessToken});
+                res.cookie('jwt', newRefreshToken, {httpOnly: true, sameSite: 'None', partitioned: true, secure: true});
+                res.json({token: newAccessToken});
             }
         )
     } catch (e) {

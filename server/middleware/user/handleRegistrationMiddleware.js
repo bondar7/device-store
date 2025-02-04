@@ -30,7 +30,7 @@ module.exports = async (req, res, next) => {
             token: refreshToken
         })
         res.cookie('jwt', refreshToken, {httpOnly: true, sameSite: 'None', partitioned: true, secure: true});
-        res.json({message: accessToken});
+        res.json({token: accessToken});
     } catch (e) {
         next(ApiError.badRequest(e.message));
     }

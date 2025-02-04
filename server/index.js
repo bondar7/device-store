@@ -11,7 +11,12 @@ const setupAssociations = require('./model/associations/setupAssociations');
 
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:3001", // Frontend URL
+        credentials: true, // Allow sending cookies
+    })
+);
 app.use(cookieParser());
 app.use(fileUpload({}));
 app.use(express.json());

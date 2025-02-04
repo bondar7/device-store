@@ -14,13 +14,13 @@ const NavBar = observer(() => {
                 <NavLink style={{color: 'white', textDecoration: 'none'}} to={SHOP_ROUTE}>BeHappy</NavLink>
                 {user.isAuth ?
                     <Nav className="mr-auto justify-content-end text-white" style={{width: '100%'}}>
-                        <Button
+                        {user.isAdmin && <Button
                             variant={'outline-light'}
                             className='mx-1'
                             onClick={() => navigate(ADMIN_ROUTE)}
                         >
                             Admin
-                        </Button>
+                        </Button>}
                         <Button
                             variant={'outline-light'}
                             className='mx-1'

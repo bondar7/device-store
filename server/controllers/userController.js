@@ -2,6 +2,7 @@ const handleRegistrationMiddleware = require('../middleware/user/handleRegistrat
 const handleLoginMiddleware = require('../middleware/user/handleLoginMiddleware');
 const handleRefreshTokenMiddleware = require('../middleware/jwt/handleRefreshTokenMiddleware');
 const handleLogoutMiddleware = require('../middleware/user/handleLogoutMiddleware');
+const handleCheckAuthMiddleware = require('../middleware/user/handleCheckAuthMiddleware');
 
 class UserController {
     async register(req, res, next){
@@ -15,6 +16,9 @@ class UserController {
     }
     async refreshToken(req, res, next) {
         await handleRefreshTokenMiddleware(req, res, next);
+    }
+    async checkAuth(req, res, next) {
+        await handleCheckAuthMiddleware(req, res, next);
     }
 }
 
