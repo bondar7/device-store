@@ -1,17 +1,42 @@
-import React, {useContext, useState} from 'react';
+import React, {use, useContext, useState} from 'react';
 import {Button, Col, Dropdown, Form, Modal, Row} from "react-bootstrap";
 import {Context} from "../../index";
+import {createDevice} from "../../http/deviceAPI";
 
 const CreateDevice = ({show, onHide}) => {
     const {store} = useContext(Context);
     const [info, setInfo] = useState([]);
+    const [type, setType] = useState({});
+    const [brand, setBrand] = useState({});
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [img, setImg] = useState(null);
 
     const addInfo = () => {
-        setInfo([...info, {title: '', description: '', number: Date.now()}]);
+        setInfo([...info, {title: '', description: '', id: Date.now()}]);
     }
 
-    const removeInfo = (number) => {
-        setInfo(info.filter(i => i.number !== number));
+    const removeInfo = (id) => {
+        setInfo(info.filter(i => i.id !== id));
+    }
+
+    const changeInfo = (key, value, id) => {
+        setInfo(info.map(i => i.id === id ? {...i, [key]: value} : i));
+    }
+
+    const onCreate = async() => {
+        const device = new FormData();
+        device.append("name", name);
+        device.append("devicePrice", price);
+        device.append("typeId", type.id);
+        device.append("brandId", brand.id);
+        device.append("img", img);
+        device.append("info", JSON.stringify(info));
+        try {
+            await createDevice(device);
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -31,23 +56,32 @@ const CreateDevice = ({show, onHide}) => {
                 <Form>
                     <div className='d-flex gap-2'>
                         <Dropdown>
-                            <Dropdown.Toggle variant={'outline-dark'}>Choose type</Dropdown.Toggle>
+                            <Dropdown.Toggle variant={'outline-dark'}>{type.name || "Choose type"}</Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {store.types.map(type =>
-                                    <Dropdown.Item key={type.id}>{type.name}</Dropdown.Item>)}
+                                    <Dropdown.Item
+                                        key={type.id}
+                                        onClick={() => setType(type)}
+                                    >
+                                        {type.name}
+                                    </Dropdown.Item>)}
                             </Dropdown.Menu>
                         </Dropdown>
                         <Dropdown>
-                            <Dropdown.Toggle variant={'outline-dark'}>Choose brand</Dropdown.Toggle>
+                            <Dropdown.Toggle variant={'outline-dark'}>{brand.name || "Choose brand"}</Dropdown.Toggle>
                             <Dropdown.Menu>
                                 {store.brands.map(brand =>
-                                    <Dropdown.Item key={brand.id}>{brand.name}</Dropdown.Item>)}
+                                    <Dropdown.Item
+                                        key={brand.id}
+                                        onClick={() => setBrand(brand)}
+                                    >{brand.name}
+                                    </Dropdown.Item>)}
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
-                    <Form.Control className='mt-3' placeholder='Device name'/>
-                    <Form.Control className='mt-3' type='number' placeholder='Device price'/>
-                    <Form.Control className='mt-3' type='file'/>
+                    <Form.Control value={name} onChange={(e) => setName(e.target.value)} className='mt-3' placeholder='Device name'/>
+                    <Form.Control value={price} onChange={(e) => setPrice(e.target.value)} className='mt-3' type='number' placeholder='Device price'/>
+                    <Form.Control onChange={(e) => setImg(e.target.files[0])} className='mt-3' type='file'/>
                     <hr/>
                     <Button
                         onClick={addInfo}
@@ -55,17 +89,23 @@ const CreateDevice = ({show, onHide}) => {
                     >Add property</Button>
                     {
                         info.map(i =>
-                            <Row key={i.number} className='mt-3'>
+                            <Row key={i.id} className='mt-3'>
                                 <Col md={4}>
-                                    <Form.Control placeholder='Title'/>
+                                    <Form.Control
+                                        onChange={(e) => changeInfo('title', e.target.value, i.id)}
+                                        placeholder='Title'
+                                    />
                                 </Col>
                                 <Col md={4}>
-                                    <Form.Control placeholder='Description'/>
+                                    <Form.Control
+                                        onChange={(e) => changeInfo('description', e.target.value, i.id)}
+                                        placeholder='Description'
+                                    />
                                 </Col>
                                 <Col md={4}>
                                     <Button
                                         variant={'outline-danger'}
-                                        onClick={() => removeInfo(i.number)}
+                                        onClick={() => removeInfo(i.id)}
                                     >
                                        Delete
                                     </Button>
@@ -77,7 +117,7 @@ const CreateDevice = ({show, onHide}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant={'outline-danger'} onClick={onHide}>Close</Button>
-                <Button variant={'outline-success'} onClick={onHide}>Create</Button>
+                <Button variant={'outline-success'} onClick={onCreate}>Create</Button>
             </Modal.Footer>
         </Modal>
     );

@@ -1,7 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
+import {createType} from "../../http/deviceAPI";
 
 const CreateType = ({show, onHide}) => {
+    const  [name, setName] = useState('');
+    const [error, setError] = useState('');
+    const onCreate = async () => {
+        try {
+            await createType(name);
+            setError('');
+            setName('');
+            onHide();
+        } catch (e) {
+            setError(e.response.data.message);
+        }
+    }
+    const onChange = (e) => {
+        setName(e.target.value);
+        setError('');
+    }
     return (
         <Modal
             show={show}
@@ -17,12 +34,17 @@ const CreateType = ({show, onHide}) => {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Control placeholder='Type type name'/>
+                    <Form.Control
+                        value={name}
+                        onChange={onChange}
+                        placeholder='Type type name'
+                    />
+                    <div style={{color: 'red'}}>{error}</div>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant={'outline-danger'} onClick={onHide}>Close</Button>
-                <Button variant={'outline-success'} onClick={onHide}>Create</Button>
+                <Button variant={'outline-success'} onClick={onCreate}>Create</Button>
             </Modal.Footer>
         </Modal>
     );

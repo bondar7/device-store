@@ -7,7 +7,12 @@ import {observer} from "mobx-react-lite";
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const logout = () => {
+        user.setUser({});
+        user.setIsAuth(false);
+        navigate(LOGIN_ROUTE);
+    }
     return (
         <Navbar bg="dark" data-bs-theme="dark" className="p-2">
             <Container>
@@ -24,6 +29,7 @@ const NavBar = observer(() => {
                         <Button
                             variant={'outline-light'}
                             className='mx-1'
+                            onClick={logout}
                         >
                             Logout
                         </Button>
