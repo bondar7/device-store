@@ -4,6 +4,7 @@ import {Context} from "../../index";
 import {createDevice} from "../../http/deviceAPI";
 
 const CreateDevice = ({show, onHide}) => {
+    const [error, setError] = useState('');
     const {store} = useContext(Context);
     const [info, setInfo] = useState([]);
     const [type, setType] = useState({});
@@ -28,14 +29,22 @@ const CreateDevice = ({show, onHide}) => {
         const device = new FormData();
         device.append("name", name);
         device.append("devicePrice", price);
-        device.append("typeId", type.id);
-        device.append("brandId", brand.id);
+        device.append("typeId", type.id || "");
+        device.append("brandId", brand.id || "");
         device.append("img", img);
         device.append("info", JSON.stringify(info));
         try {
             await createDevice(device);
+            setName('');
+            setPrice('');
+            setType('');
+            setBrand('');
+            setImg(null);
+            setInfo([]);
+            setError('');
+            onHide();
         } catch (e) {
-            console.log(e);
+            setError(e?.response?.data?.message);
         }
     }
 
@@ -79,9 +88,27 @@ const CreateDevice = ({show, onHide}) => {
                             </Dropdown.Menu>
                         </Dropdown>
                     </div>
-                    <Form.Control value={name} onChange={(e) => setName(e.target.value)} className='mt-3' placeholder='Device name'/>
-                    <Form.Control value={price} onChange={(e) => setPrice(e.target.value)} className='mt-3' type='number' placeholder='Device price'/>
-                    <Form.Control onChange={(e) => setImg(e.target.files[0])} className='mt-3' type='file'/>
+                    <Form.Control
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className='mt-3'
+                        placeholder='Name'
+                    />
+                    <Form.Control
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value.replace(/\D/g, ""))} // Remove non-digits
+                        className='mt-3'
+                        type="text"
+                        pattern="\d*"
+                        inputMode="numeric"
+                        placeholder='Price'
+                    />
+                    <Form.Control
+                        onChange={(e) => setImg(e.target.files[0])}
+                        className='mt-3'
+                        type='file'
+                    />
+                    <div className='mt-3' style={{color: 'red'}}>{error}</div>
                     <hr/>
                     <Button
                         onClick={addInfo}
@@ -107,7 +134,7 @@ const CreateDevice = ({show, onHide}) => {
                                         variant={'outline-danger'}
                                         onClick={() => removeInfo(i.id)}
                                     >
-                                       Delete
+                                        Delete
                                     </Button>
                                 </Col>
                             </Row>

@@ -8,7 +8,12 @@ class DeviceController {
     async create(req, res, next) {
         try {
             const {name, devicePrice, brandId, typeId, info} = req.body;
-            const {img} = req.files
+            if (!name) return next(ApiError.badRequest('Name is required!'));
+            if (!devicePrice) return next(ApiError.badRequest('Price is required!'));
+            if (!brandId) return next(ApiError.badRequest('Select brand!'));
+            if (!typeId) return next(ApiError.badRequest('Select type!'));
+            if (!req.files) return next(ApiError.badRequest('Image is required!'));
+            const {img} = req.files;
             const fileName = uuid.v4() + '.jpg';
             await img.mv(path.resolve(__dirname, '..', 'static', fileName));
             const device = await Device.create(
@@ -19,9 +24,6 @@ class DeviceController {
                 brandId,
                 typeId,
                 });
-
-            console.log('info:', info)
-
             if (info) {
                 JSON.parse(info).forEach(item => {
                     DeviceInfo.create({
@@ -75,6 +77,7 @@ class DeviceController {
                 include: [{model: DeviceInfo, as: "info"}]
             }
         );
+        console.log(device);
        return res.json(device);
     }
 }
