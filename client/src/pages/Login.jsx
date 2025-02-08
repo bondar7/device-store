@@ -18,7 +18,7 @@ const Login = () => {
             _user = await login(email, password); //get decoded access token with user info
             user.setUser(_user);
             if (_user) user.setIsAuth(true);
-            if(user.user?.roles?.includes('ADMIN')) user.setIsAdmin(true);
+            if(_user?.roles?.includes('ADMIN')) user.setIsAdmin(true);
             navigate(SHOP_ROUTE);
         } catch (e) {
             setError(e.response.data.message);

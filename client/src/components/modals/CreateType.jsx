@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 import {createType} from "../../http/deviceAPI";
+import {Context} from "../../index";
 
 const CreateType = ({show, onHide}) => {
     const  [name, setName] = useState('');
@@ -12,7 +13,7 @@ const CreateType = ({show, onHide}) => {
             setName('');
             onHide();
         } catch (e) {
-            setError(e.response.data.message);
+            setError(e?.response?.data?.message);
         }
     }
     const onChange = (e) => {

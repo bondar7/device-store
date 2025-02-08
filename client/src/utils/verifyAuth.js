@@ -1,5 +1,6 @@
 import {checkAuth, refreshToken} from "../http/authAPI";
 import {jwtDecode} from "jwt-decode";
+import {logout} from "../http/userAPI";
 
 export const verifyAuth = async (user, setIsLoading) => {
         setIsLoading(true);
@@ -8,7 +9,7 @@ export const verifyAuth = async (user, setIsLoading) => {
             updateUserStore(user, isAuth, localStorage.getItem('token'));
         } catch (e) {
             const msg = e.response?.data?.message || e.message;
-            if (msg.includes("expired")) {
+            if (msg.toLowerCase().includes("expired")) {
                 try {
                     const newToken = await refreshToken(); //request new access token
                     updateUserStore(user, true, newToken)
@@ -25,7 +26,17 @@ export const verifyAuth = async (user, setIsLoading) => {
 }
 
 function updateUserStore(user, isAuth, token) {
-    if (!token) return;
+    if (!token) {
+            //clear user store, so that user is logged out
+            logout().then(data => {
+                    console.log(data);
+                    user.setIsAuth(false);
+                    user.setIsAdmin(false);
+                    user.setUser({});
+                }
+            )
+        return;
+    }
     user.setUser(jwtDecode(token));
     user.setIsAuth(isAuth);
     if(user.user?.roles?.includes('ADMIN')) user.setIsAdmin(true);

@@ -4,11 +4,14 @@ import {Button, Col, Container, Form, Nav, Navbar, Row} from "react-bootstrap";
 import {NavLink, useNavigate} from "react-router-dom";
 import {ADMIN_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
+import {logout} from "../http/userAPI";
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);
     const navigate = useNavigate();
-    const logout = () => {
+    const onLogout = async () => {
+        const res = await logout();
+        console.log(res);
         user.setUser({});
         user.setIsAuth(false);
         navigate(LOGIN_ROUTE);
@@ -16,7 +19,7 @@ const NavBar = observer(() => {
     return (
         <Navbar bg="dark" data-bs-theme="dark" className="p-2">
             <Container>
-                <NavLink style={{color: 'white', textDecoration: 'none'}} to={SHOP_ROUTE}>BeHappy</NavLink>
+                <NavLink style={{color: 'white', textDecoration: 'none'}} to={SHOP_ROUTE}>Store</NavLink>
                 {user.isAuth ?
                     <Nav className="mr-auto justify-content-end text-white" style={{width: '100%'}}>
                         {user.isAdmin && <Button
@@ -29,7 +32,7 @@ const NavBar = observer(() => {
                         <Button
                             variant={'outline-light'}
                             className='mx-1'
-                            onClick={logout}
+                            onClick={onLogout}
                         >
                             Logout
                         </Button>

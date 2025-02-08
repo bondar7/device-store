@@ -28,7 +28,7 @@ class DeviceController {
                 JSON.parse(info).forEach(item => {
                     DeviceInfo.create({
                         title: item.title,
-                        description: item.title,
+                        description: item.description,
                         deviceId: device.id
                     });
                 })

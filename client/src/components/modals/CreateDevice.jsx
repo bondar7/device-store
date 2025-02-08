@@ -1,7 +1,7 @@
-import React, {use, useContext, useState} from 'react';
+import React, {use, useContext, useEffect, useState} from 'react';
 import {Button, Col, Dropdown, Form, Modal, Row} from "react-bootstrap";
 import {Context} from "../../index";
-import {createDevice} from "../../http/deviceAPI";
+import {createDevice, fetchBrands, fetchTypes} from "../../http/deviceAPI";
 
 const CreateDevice = ({show, onHide}) => {
     const [error, setError] = useState('');

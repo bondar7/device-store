@@ -13,3 +13,8 @@ export const login = async (email, password) => {
         return jwtDecode(data.token);
 }
 
+export const logout = async () => {
+        const {data} = await $host.post("api/user/logout", {}, {withCredentials: true});
+        localStorage.removeItem('token');
+        return data;
+}

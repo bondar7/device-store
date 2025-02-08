@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 import {createBrand} from "../../http/deviceAPI";
+import {Context} from "../../index";
 
 const CreateBrand = ({show, onHide}) => {
-    const  [name, setName] = useState('');
+    const [name, setName] = useState('');
     const [error, setError] = useState('');
     const onCreate = async () => {
         try {
@@ -12,7 +13,8 @@ const CreateBrand = ({show, onHide}) => {
             setName('');
             onHide();
         } catch (e) {
-            setError(e.response.data.message);
+            onHide();
+            setError(e?.response?.data?.message);
         }
     }
     const onChange = (e) => {

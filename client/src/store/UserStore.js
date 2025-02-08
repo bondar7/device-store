@@ -5,6 +5,7 @@ export default class UserStore {
         this._isAuth = false;
         this._isAdmin = false;
         this._user = {};
+        this._isAccessError = false;
         makeAutoObservable(this);
     }
 
@@ -20,6 +21,10 @@ export default class UserStore {
         this._isAdmin = isAdmin;
     }
 
+    setIsAccessError(isError) {
+        this._isAccessError = isError;
+    }
+
     get isAuth() {
         return this._isAuth;
     }
@@ -28,5 +33,8 @@ export default class UserStore {
     }
     get isAdmin() {
         return this._isAdmin;
+    }
+    get isAccessError() {
+        return this._isAccessError;
     }
 }

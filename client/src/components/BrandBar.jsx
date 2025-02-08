@@ -12,7 +12,7 @@ const BrandBar = observer(() =>  {
                     <Card
                         className='p-3 text-center'
                         onClick={() => store.setSelectedBrand(brand)}
-                        border={store.selectedBrand === brand && 'dark'}
+                        border={brand.id === store?.selectedBrand?.id && 'dark'}
                     >{brand.name}</Card>
                 </Col>)}
         </Row>
