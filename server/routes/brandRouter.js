@@ -7,5 +7,6 @@ const {ROLES_LIST} = require('../middleware/jwt/verifyRolesMiddleware');
 
 router.post('/',authMiddleware, verifyRolesMiddleware([ROLES_LIST.Admin]), brandController.create);
 router.get('/', brandController.getAll);
+router.get('/:id', brandController.getById);
 
 module.exports = router;

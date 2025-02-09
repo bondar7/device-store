@@ -1,11 +1,11 @@
-import {refreshToken} from "../http/authAPI";
 import {$authHost} from "../http";
+import {refreshToken} from "../http/authAPI";
 import logoutUser from "./logoutUser";
 
-export const $makeAuthPost = async (URL, obj, isRetry = false) => {
-    if (!obj) return;
+export const $makeAuthGet = async (URL, isRetry = false) => {
+    if (!URL) return;
     try {
-        const { data } = await $authHost.post(URL, obj);
+        const { data } = await $authHost.get(URL);
         return data;
     } catch (e) {
         const msg = e?.response?.data?.message || e.message;
@@ -14,7 +14,7 @@ export const $makeAuthPost = async (URL, obj, isRetry = false) => {
             try {
                 await refreshToken(); //request new access token
                 console.log("Refresh token succeeded");
-                return await $makeAuthPost(URL, obj, isRetry);
+                return await $makeAuthGet(URL, true);
             } catch (e) {
                 console.error("Refresh token failed:", e.response);
                 logoutUser(true);

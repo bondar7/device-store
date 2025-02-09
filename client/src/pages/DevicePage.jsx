@@ -1,18 +1,30 @@
-import React, {useEffect, useState} from 'react';
-import {Button, Card, Col, Container, Image, ListGroup, ListGroupItem, Row} from "react-bootstrap";
+import React, {useContext, useEffect, useState} from 'react';
+import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import star from '../assets/big_star.png';
 import {useParams} from "react-router-dom";
 import {fetchDeviceById} from "../http/deviceAPI";
+import {addToBasket} from "../http/basketAPI";
+import {Context} from "../index";
 
 const DevicePage = () => {
     const {id} = useParams();
     const [device, setDevice] = useState({info: []});
+    const {basket} = useContext(Context);
     useEffect(() => {
         fetchDeviceById(id).then(data => {
             setDevice(data)
             console.log(data)
         });
     }, []);
+    const onAdd = () => {
+        addToBasket(device.id)
+            .then(data => {
+                console.log(data)
+            })
+            .catch(e => {
+                console.log(e);
+            })
+    }
     return (
         <Container className='mt-3'>
             <Row>
@@ -35,7 +47,7 @@ const DevicePage = () => {
                         style={{width: 300, height: 300, fontSize: 32, border: '2px solid light-grey'}}
                     >
                         <h3>From {device.price}</h3>
-                        <Button variant='outline-dark'>Add to cart</Button>
+                        <Button onClick={onAdd} variant='outline-dark'>Add to cart</Button>
                     </Card>
                 </Col>
             </Row>

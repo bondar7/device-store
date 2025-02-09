@@ -22,6 +22,17 @@ class BrandController {
             return next(ApiError.badRequest(e.message));
         }
     }
+
+    async getById(req, res, next) {
+        try {
+            const {id} = req.params;
+            if (!id) return next(ApiError.badRequest("ID is required!"));
+            const brand = await Brand.findOne({where: {id}});
+            return res.status(200).json(brand);
+        } catch (e) {
+            return next(ApiError.badRequest(e.message));
+        }
+    }
 }
 
 module.exports = new BrandController();
