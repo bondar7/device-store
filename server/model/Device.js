@@ -8,5 +8,6 @@ module.exports = sequelize.define('device', {
     rating: {type: DataTypes.INTEGER, defaultValue: 0},
     img: {type: DataTypes.STRING, allowNull: false},
     brandId: { type: DataTypes.INTEGER, allowNull: false },
+    brandName: { type: DataTypes.STRING, allowNull: false },
     typeId: { type: DataTypes.INTEGER, allowNull: false }
 })

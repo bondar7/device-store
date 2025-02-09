@@ -50,12 +50,12 @@ const BasketItem = observer(({item}) => {
         <div className="d-flex align-items-center border-top border-bottom py-3">
             <Col xs={2}>
                 <img
-                    src={process.env.REACT_APP_API_URL + item.device.img}
+                    src={process.env.REACT_APP_API_URL + item?.device?.img}
                     alt="image" style={{width: '3.5rem', borderRadius: '0.5rem'}}/>
             </Col>
             <Col>
-                <div className="text-muted">BRAND</div>
-                <div>{item.device.name}</div>
+                <div className="text-muted">{item?.device?.brandName}</div>
+                <div>{item?.device?.name}</div>
             </Col>
             <Col className="text-center">
                 <div className="d-flex align-items-center">
@@ -74,7 +74,7 @@ const BasketItem = observer(({item}) => {
                 </div>
             </Col>
             <Col className="text-right d-flex justify-content-around">
-                <div>${item.device.price}</div>
+                <div>${item?.device?.price}</div>
                 <span onClick={onDelete} style={{cursor: 'pointer', color: '#999'}}>&#10005;</span>
             </Col>
         </div>

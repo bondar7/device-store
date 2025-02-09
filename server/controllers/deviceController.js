@@ -7,7 +7,7 @@ const path = require('path');
 class DeviceController {
     async create(req, res, next) {
         try {
-            const {name, devicePrice, brandId, typeId, info} = req.body;
+            const {name, devicePrice, brandId, brandName, typeId, info} = req.body;
             if (!name) return next(ApiError.badRequest('Name is required!'));
             if (!devicePrice) return next(ApiError.badRequest('Price is required!'));
             if (!brandId) return next(ApiError.badRequest('Select brand!'));
@@ -22,6 +22,7 @@ class DeviceController {
                 price: devicePrice,
                 img: fileName,
                 brandId,
+                brandName,
                 typeId,
                 });
             if (info) {

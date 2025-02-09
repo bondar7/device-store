@@ -31,6 +31,7 @@ const CreateDevice = ({show, onHide}) => {
         device.append("devicePrice", price);
         device.append("typeId", type.id || "");
         device.append("brandId", brand.id || "");
+        device.append("brandName", brand.name || "");
         device.append("img", img);
         device.append("info", JSON.stringify(info));
         try {
