@@ -1,20 +1,21 @@
 import React, {useContext} from 'react';
 import {Context} from "../index";
-import {Button, Col, Container, Form, Nav, Navbar, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, Image, Nav, Navbar, Row} from "react-bootstrap";
 import {NavLink, useNavigate} from "react-router-dom";
 import {ADMIN_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
-import {logout} from "../http/userAPI";
+import cart from '../assets/cart.png';
+import logoutUser from "../utils/logoutUser";
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);
     const navigate = useNavigate();
     const onLogout = async () => {
-        const res = await logout();
-        console.log(res);
-        user.setUser({});
-        user.setIsAuth(false);
+        await logoutUser(false);
         navigate(LOGIN_ROUTE);
+    }
+    const onCart = () => {
+        console.log("cart")
     }
     return (
         <Navbar bg="dark" data-bs-theme="dark" className="p-2">
@@ -22,6 +23,18 @@ const NavBar = observer(() => {
                 <NavLink style={{color: 'white', textDecoration: 'none'}} to={SHOP_ROUTE}>Store</NavLink>
                 {user.isAuth ?
                     <Nav className="mr-auto justify-content-end text-white" style={{width: '100%'}}>
+                        {user.isAuth &&
+                            <div className="d-flex justify-content-center align-items-center">
+                                <Image
+                                    src={cart}
+                                    width={28}
+                                    height={28}
+                                    onClick={onCart}
+                                    style={{color: "white", cursor: "pointer"}}
+                                    className="mx-1"
+                                />
+                            </div>
+                        }
                         {user.isAdmin && <Button
                             variant={'outline-light'}
                             className='mx-1'

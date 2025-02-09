@@ -17,11 +17,11 @@ export const $makeAuthPost = async (URL, obj, isRetry = false) => {
                 return await $makeAuthPost(URL, obj, true);
             } catch (e) {
                 console.error("Refresh token failed:", e.response);
-                logoutUser();
+                logoutUser(true);
             }
         } else if (status === 401) { //unauthorized - token has not been provided or is invalid
             console.log("Auth failed: ", msg);
-            logoutUser();
+            logoutUser(true);
         } else {
             throw e;
         }

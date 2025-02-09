@@ -19,13 +19,13 @@ function setupAssociations() {
     User.hasMany(RefreshToken);
     RefreshToken.belongsTo(User);
 
-    Basket.hasMany(BasketDevice);
-    BasketDevice.belongsTo(Basket);
-
     Type.hasMany(Device);
     Device.belongsTo(Type);
     Brand.hasMany(Device);
     Device.belongsTo(Brand);
+
+    Basket.hasMany(BasketDevice, {as: "devices"});
+    BasketDevice.belongsTo(Basket, {foreignKey: "basketId"});
 
     Device.hasMany(BasketDevice);
     BasketDevice.belongsTo(Device);
