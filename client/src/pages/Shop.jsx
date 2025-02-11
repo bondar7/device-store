@@ -13,7 +13,7 @@ const Shop = observer(() => {
     useEffect(() => {
         fetchTypes().then(data => store.setTypes(data));
         fetchBrands().then(data => store.setBrands(data));
-        fetchDevices(store?.selectedBrand?.id, store?.selectedType?.id, store.limit, store.selectedPage)
+        fetchDevices(store.searchQuery, store?.selectedBrand?.id, store?.selectedType?.id, store.limit, store.selectedPage)
             .then(data => {
             store.setDevices(data.rows);
             store.setTotalCount(data.count);
@@ -21,7 +21,7 @@ const Shop = observer(() => {
             .catch(e => {
                 console.log(e);
             })
-    },[store.selectedPage, store.selectedType, store.selectedBrand]);
+    },[store.selectedPage, store.searchQuery, store.selectedType, store.selectedBrand]);
     return (
         <Container>
             <Row className='mt-2'>

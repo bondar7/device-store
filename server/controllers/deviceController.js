@@ -3,6 +3,8 @@ const DeviceInfo = require('../model/DeviceInfo');
 const ApiError = require('../error/ApiError');
 const uuid = require('uuid');
 const path = require('path');
+const {Op} = require("sequelize");
+const sea = require("node:sea");
 
 class DeviceController {
     async create(req, res, next) {
@@ -43,25 +45,52 @@ class DeviceController {
 
     async getAll(req, res, next) {
         try {
-            let {brandId, typeId, page, limit} = req.query;
+            let {searchQuery, brandId, typeId, page, limit} = req.query;
             page = Number(page) || 1;
             limit = Number(limit) || 9;
             let offset = page * limit - limit;
 
-            if (!brandId && !typeId) {
+            if (!brandId && !typeId && !searchQuery) {
                 const devices = await Device.findAndCountAll({limit, offset});
                 return res.status(200).json(devices);
             }
-            if (!brandId && typeId) {
+            if (!brandId && !searchQuery && typeId) {
                 const devices = await Device.findAndCountAll({where: {typeId}, limit, offset});
                 return res.status(200).json(devices);
             }
-            if (brandId && !typeId) {
+            if (brandId && !typeId && !searchQuery) {
                 const devices = await Device.findAndCountAll({where: {brandId}, limit, offset});
                 return res.status(200).json(devices);
             }
-            if (brandId && typeId) {
+            if (brandId && typeId && !searchQuery) {
                 const devices = await Device.findAndCountAll({where: {brandId, typeId}, limit, offset});
+                return res.status(200).json(devices);
+            }
+            if (searchQuery && !brandId && !typeId) {
+                const devices = await Device.findAndCountAll({
+                    where: {
+                        name: { [Op.iLike]: `%${searchQuery}%` } // supported only in PostgreSQL
+                    }
+                });
+                return res.status(200).json(devices);
+            }
+            if (searchQuery && brandId && !typeId) {
+                const devices = await Device.findAndCountAll({
+                    where: {
+                        name: { [Op.iLike]: `%${searchQuery}%` },
+                        brandId: brandId
+                    }
+                });
+                return res.status(200).json(devices);
+            }
+            if (searchQuery && brandId && typeId) {
+                const devices = await Device.findAndCountAll({
+                    where: {
+                        name: { [Op.iLike]: `%${searchQuery}%` },
+                        brandId: brandId,
+                        typeId: typeId
+                    }
+                });
                 return res.status(200).json(devices);
             }
         } catch (e) {

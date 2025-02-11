@@ -1,15 +1,17 @@
 import React, {useContext} from 'react';
 import {Context} from "../index";
 import {Button, Col, Container, Form, Image, Nav, Navbar, Row} from "react-bootstrap";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "../utils/consts";
 import {observer} from "mobx-react-lite";
 import cart from '../assets/cart.png';
 import logoutUser from "../utils/logoutUser";
+import SearchBar from "./SearchBar";
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);
     const navigate = useNavigate();
+    const location = useLocation();
     const onLogout = async () => {
         await logoutUser(false);
         navigate(LOGIN_ROUTE);
@@ -21,8 +23,9 @@ const NavBar = observer(() => {
         <Navbar bg="dark" data-bs-theme="dark" className="p-2">
             <Container>
                 <NavLink style={{color: 'white', textDecoration: 'none'}} to={SHOP_ROUTE}>Store</NavLink>
+                {location.pathname === SHOP_ROUTE && <SearchBar/>}
                 {user.isAuth ?
-                    <Nav className="mr-auto justify-content-end text-white" style={{width: '100%'}}>
+                    <Nav className="mr-auto justify-content-end text-white">
                         {user.isAuth &&
                             <div className="d-flex justify-content-center align-items-center">
                                 <Image
@@ -51,7 +54,7 @@ const NavBar = observer(() => {
                         </Button>
                     </Nav>
                     :
-                    <Nav className="justify-content-end text-white" style={{width: '100%'}}>
+                    <Nav className="justify-content-end text-white">
                         <Button
                             variant={'outline-light'}
                             className='mx-1'
