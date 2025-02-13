@@ -4,6 +4,7 @@ const BasketDevice = require('../BasketDevice');
 const Device = require('../Device');
 const DeviceInfo = require('../DeviceInfo');
 const Rating = require('../Rating');
+const Review = require('../Review');
 const Type = require('../Type');
 const Brand = require('../Brand');
 const TypeBrand = require('../TypeBrand');
@@ -12,6 +13,11 @@ const RefreshToken = require('../RefreshToken');
 function setupAssociations() {
     User.hasOne(Basket);
     Basket.belongsTo(User);
+
+    User.hasMany(Review);
+    Review.belongsTo(User);
+    Device.hasMany(Review);
+    Review.belongsTo(Device);
 
     User.hasMany(Rating);
     Rating.belongsTo(User);

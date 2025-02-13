@@ -9,7 +9,7 @@ class JWT {
                 roles: roles
             },
             process.env.ACCESS_TOKEN_SECRET,
-            {expiresIn: '1m'}
+            {expiresIn: '5m'}
         );
     }
     static signRefreshToken(email) {
