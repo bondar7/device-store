@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
                     await RefreshToken.destroy({ where: { token: refreshToken } });
                     return next(ApiError.unauthorized("Refresh token has expired or is invalid"));
                 }
-                const newAccessToken = JWT.signAccessToken(user.id, user.email, user.roles);
+                const newAccessToken = JWT.signAccessToken(user.id, user.username, user.email, user.roles);
                 const newRefreshToken = JWT.signRefreshToken(user.email);
 
                 //delete the old token

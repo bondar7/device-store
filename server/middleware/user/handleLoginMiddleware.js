@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
             if (!user) return next(ApiError.badRequest('User does not exist!'));
             if (!(await isCorrectPwd(password, user.password))) return next(ApiError.badRequest('Incorrect password!'));
             //create jwt tokens
-            const accessToken = JWT.signAccessToken(user.id, user.email, user.roles);
+            const accessToken = JWT.signAccessToken(user.id, user.username, user.email, user.roles);
             const refreshToken = JWT.signRefreshToken(user.email);
             //save refresh token in DB
             await RefreshToken.create({

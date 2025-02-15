@@ -1,10 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 class JWT {
-    static signAccessToken(id, email, roles) {
+    static signAccessToken(id, username, email, roles) {
         return jwt.sign(
             {
                 id: id,
+                username: username,
                 email: email,
                 roles: roles
             },

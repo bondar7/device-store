@@ -6,6 +6,7 @@ class ReviewController {
         try {
             const {title, description, deviceId, rating} = req.body;
             const userId = req.user.id;
+            const username = req.user.username;
             if (!title) return next(ApiError.badRequest("Title is required"));
             if (!description) return next(ApiError.badRequest("Description is required"));
             if (!deviceId) return next(ApiError.badRequest("Device ID is required"));
@@ -16,6 +17,7 @@ class ReviewController {
                 title,
                 description,
                 userId,
+                username,
                 deviceId,
                 rating
             });
@@ -53,16 +55,21 @@ class ReviewController {
     async updateReview(req, res, next) {
         try {
             const {reviewId} = req.params;
+            const userId = req.user.id;
             const {title, description, rating} = req.body;
-            console.log(reviewId, title, description, rating)
-            const updatedReview = await Review.update({
+            if (!title) return next(ApiError.badRequest("Title is required"));
+            if (!description) return next(ApiError.badRequest("Description is required"));
+            if (!userId) return next(ApiError.forbidden("Auth error"));
+            if (!rating) return next(ApiError.forbidden("Rating is required"));
+            const updatedReview = await Review.update(
+                {
                 title: title,
                 description: description,
                 rating: rating,
                 createdAt: new Date()
-            },
+                },
                 {
-                    where: {id: reviewId},
+                    where: {id: reviewId, userId: userId},
                     returning: true,    // Return the updated rows
                     plain: true         // Return a single object, not an array
                 }

@@ -57,7 +57,7 @@ const ReviewItem = observer(({ review: item }) => {
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between">
                     <div className="d-flex">
-                        <strong className="me-2">USER</strong>
+                        <strong className="me-2">{item.username}</strong>
                         <div className="d-flex align-items-center">
                             {
                                 isEditing ? (

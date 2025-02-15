@@ -16,12 +16,13 @@ module.exports = async (req, res, next) => {
         if (user) return next(ApiError.badRequest('User already exist!'));
         const hashedPassword = await bcrypt.hash(password, 10);
         const createdUser = await User.create({
+            username: generateUniqueUsername(),
             email: email,
             password: hashedPassword
         });
         await Basket.create({userId: createdUser.id});
         //create jwt tokens
-        const accessToken = JWT.signAccessToken(createdUser.id, createdUser.email, createdUser.roles);
+        const accessToken = JWT.signAccessToken(createdUser.id, createdUser.username, createdUser.email, createdUser.roles);
         const refreshToken = JWT.signRefreshToken(createdUser.email);
         //save refresh token in DB
         await RefreshToken.create({
@@ -42,4 +43,11 @@ function isValidEmail(email) {
 }
 function isValidPwd(pwd) {
     return pwd.length >= 8;
+}
+function generateUniqueUsername() {
+    const prefix = 'user_'; // You can change this to any custom prefix
+    const randomPart = Math.random().toString(36).substring(2, 8); // Generates a random alphanumeric string
+    const timestamp = Date.now(); // Adding a timestamp ensures uniqueness
+
+    return prefix + randomPart + '_' + timestamp; // Combining prefix, random part, and timestamp for uniqueness
 }

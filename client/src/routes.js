@@ -1,15 +1,29 @@
 import Admin from "./pages/Admin";
-import {ADMIN_ROUTE, BASKET_ROUTE, DEVICE_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE} from "./utils/consts";
+import {
+    ADMIN_ROUTE,
+    BASKET_ROUTE,
+    DEVICE_ROUTE,
+    LOGIN_ROUTE,
+    PROFILE_ROUTE,
+    REGISTRATION_ROUTE,
+    SHOP_ROUTE
+} from "./utils/consts";
 import Basket from "./pages/Basket";
 import Shop from "./pages/Shop";
 import DevicePage from "./pages/DevicePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 export const authRoutes = [
     {
         path: BASKET_ROUTE,
         Component: <Basket/>,
+        exact: true
+    },
+    {
+        path: PROFILE_ROUTE,
+        Component: <ProfilePage/>,
         exact: true
     }
 ]

@@ -7,5 +7,6 @@ module.exports = sequelize.define("review", {
     description: {type: DataTypes.STRING, allowNull: false},
     rating: {type: DataTypes.INTEGER, allowNull: false},
     userId: {type: DataTypes.INTEGER, allowNull: false},
+    username: {type: DataTypes.STRING, allowNull: false},
     deviceId: {type: DataTypes.STRING, allowNull: false},
 })
