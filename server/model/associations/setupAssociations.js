@@ -9,10 +9,15 @@ const Type = require('../Type');
 const Brand = require('../Brand');
 const TypeBrand = require('../TypeBrand');
 const RefreshToken = require('../RefreshToken');
+const Wishlist = require('../Wishlist');
+const WishlistDevice = require('../WishlistDevice');
 
 function setupAssociations() {
     User.hasOne(Basket);
     Basket.belongsTo(User);
+
+    User.hasOne(Wishlist);
+    Wishlist.belongsTo(User);
 
     User.hasMany(Review);
     Review.belongsTo(User);
@@ -33,8 +38,13 @@ function setupAssociations() {
     Basket.hasMany(BasketDevice, {as: "devices"});
     BasketDevice.belongsTo(Basket, {foreignKey: "basketId"});
 
+    Wishlist.hasMany(WishlistDevice, {as: "devices"});
+    WishlistDevice.belongsTo(Wishlist, {foreignKey: "wishlistId"});
+
     Device.hasMany(BasketDevice);
+    Device.hasMany(WishlistDevice);
     BasketDevice.belongsTo(Device);
+    WishlistDevice.belongsTo(Device);
 
     Device.hasMany(DeviceInfo, {as: "info"});
     DeviceInfo.belongsTo(Device, { foreignKey: "deviceId" });
