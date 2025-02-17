@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Card, Col, Image} from "react-bootstrap";
-import star from '../assets/star.png';
-import filledGreenCart from '../assets/filled_green_cart.png';
-import greenCart from '../assets/green_cart.png';
+import star from '../../../assets/star.png';
+import filledGreenCart from '../../../assets/filled_green_cart.png';
+import greenCart from '../../../assets/green_cart.png';
 import {useNavigate} from 'react-router-dom';
-import {DEVICE_ROUTE} from "../utils/consts";
-import {addToBasket} from "../http/basketAPI";
-import {Context} from "../index";
+import {DEVICE_ROUTE} from "../../../utils/consts";
+import {addToBasket} from "../../../http/basketAPI";
+import {Context} from "../../../index";
 
 const DeviceItem = ({device}) => {
     const navigate = useNavigate();
@@ -17,9 +17,18 @@ const DeviceItem = ({device}) => {
         await addToBasket(device.id);
     }
     return (
-            <Col md={3} className='mt-3' onClick={() => navigate(DEVICE_ROUTE + `/${device.id}`)}>
+            <Col md={3} className='mt-3 d-flex justify-content-center' onClick={() => navigate(DEVICE_ROUTE + `/${device.id}`)}>
                 <Card style={{width: 150, cursor: 'pointer'}} border='light'>
-                    <Image src={process.env.REACT_APP_API_URL + device.img} width={150} height={150}/>
+                    <Image
+                        src={process.env.REACT_APP_API_URL + device.img}
+                        style={{
+                            maxWidth: 150,
+                            maxHeight: 150,
+                            width: "auto",
+                            height: "auto",
+                            objectFit: "contain"
+                        }}
+                    />
                     <div className='d-flex justify-content-between align-items-center'>
                         <div className='text-black-50'>{device.brandName ? device.brandName : 'Loading...'}</div>
                         <div className='d-flex justify-content-between align-items-center'>

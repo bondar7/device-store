@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import TypeList from "./SideBar/TypeList/TypeList";
 import BrandList from "./SideBar/BrandList/BrandList";
-import DeviceList from "../DeviceList";
+import DeviceList from "./DeviceList/DeviceList";
 import {Context} from "../../index";
 import {fetchBrands, fetchDevices, fetchTypes} from "../../http/deviceAPI";
 import Pages from "../Pages";
