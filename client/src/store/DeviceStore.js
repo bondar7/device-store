@@ -12,7 +12,7 @@ export default class DeviceStore {
         this._selectedMaxPrice = 100000;
         this._selectedPage = 1;
         this._totalCount = 0;
-        this._limit = 3;
+        this._limit = 9;
         makeAutoObservable(this);
     }
 

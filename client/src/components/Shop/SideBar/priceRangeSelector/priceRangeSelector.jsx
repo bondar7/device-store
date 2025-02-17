@@ -2,8 +2,8 @@ import React, {useContext, useEffect} from 'react';
 import { useState } from "react";
 import "./priceRangeSelector.css";
 import {Button} from "react-bootstrap";
-import {Context} from "../../index";
-import {fetchDevices} from "../../http/deviceAPI";
+import {Context} from "../../../../index";
+import {fetchDevices} from "../../../../http/deviceAPI";
 
 function PriceRangeSelector() {
     const {store} = useContext(Context);
@@ -119,7 +119,7 @@ function PriceRangeSelector() {
     }
 
     return (
-        <div className="d-flex" style={{maxWidth: 310}}>
+        <div style={{maxWidth: 310, borderTop: "1px solid lightgray"}}>
             <div className="double-slider-box">
                 <div className="input-box">
                     <div className="min-box">
@@ -175,8 +175,10 @@ function PriceRangeSelector() {
                     {isDragging && <div className="min-tooltip">{store.selectedMinPrice }</div>}
                     {isDragging && <div className="max-tooltip">{store.selectedMaxPrice }</div>}
                 </div>
+                <div className="w-100 d-flex justify-content-center">
+                    <Button style={{maxHeight: 40}} variant={"outline-dark"} onClick={onSort}>OK</Button>
+                </div>
             </div>
-            <Button style={{maxHeight: 40, marginTop: 22.5, marginRight: 20}} variant={"outline-dark"} onClick={onSort}>OK</Button>
         </div>
     );
 }

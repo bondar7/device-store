@@ -8,13 +8,13 @@ const Pages = observer(() => {
     const totalPages = Math.ceil(store.totalCount / store.limit);
     const pagesArray = Array.from({ length: totalPages }, (_, i) => i + 1);
     return (
-        <Pagination>
-            {pagesArray.map(p =>
-                <Pagination.Item
-                    key={p}
-                    onClick={() => store.setSelectedPage(p)}
-                    active={store.selectedPage === p}
-                >{p}</Pagination.Item>)}
+        <Pagination >
+            {pagesArray.length > 1 &&  (pagesArray.map(p =>
+                    <Pagination.Item
+                        key={p}
+                        onClick={() => store.setSelectedPage(p)}
+                        active={store.selectedPage === p}
+                    >{p}</Pagination.Item>))}
         </Pagination>
     )
 });

@@ -9,7 +9,7 @@ import {
     SHOP_ROUTE
 } from "./utils/consts";
 import Basket from "./pages/Basket";
-import Shop from "./pages/Shop";
+import Shop from "./components/Shop/Shop";
 import DevicePage from "./pages/DevicePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
