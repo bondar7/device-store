@@ -17,7 +17,7 @@ const Shop = observer(() => {
         fetchBrands().then(data => store.setBrands(data));
         fetchDevices(
             store.searchQuery,
-            store?.selectedBrand?.id,
+            store?.selectedBrands,
             store?.selectedType?.id,
             store.selectedMinPrice * 100,
             store.selectedMaxPrice * 100,
@@ -31,7 +31,7 @@ const Shop = observer(() => {
             .catch(e => {
                 console.log(e);
             })
-    },[store.selectedPage, store.searchQuery, store.selectedType, store.selectedBrand]);
+    },[store.selectedPage, store.searchQuery, store.selectedType, store.selectedBrands]);
     return (
         <Container>
             <Row className='mt-2'>

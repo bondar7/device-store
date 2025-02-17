@@ -45,7 +45,7 @@ class DeviceController {
 
     async getAll(req, res, next) {
         try {
-            let {searchQuery, brandId, typeId, minPrice, maxPrice, page, limit} = req.query;
+            let {searchQuery, brands, typeId, minPrice, maxPrice, page, limit} = req.query;
             page = Number(page) || 1;
             limit = Number(limit) || 9;
             let offset = page * limit - limit;
@@ -58,7 +58,10 @@ class DeviceController {
                 if (maxPrice) where.price[Op.lte] = Number(maxPrice);
             }
 
-            if (brandId) where.brandId = brandId;
+            if (Array.isArray(brands) && brands.length > 0) {
+                const brandIds = brands.map(id => Number(id));
+                where.brandId = { [Op.in]: brandIds };
+            }
             if (typeId) where.typeId = typeId;
             if (searchQuery) where.name = { [Op.iLike]: `%${searchQuery}%`} // PostgreSQL case-insensitive search
 

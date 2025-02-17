@@ -12,7 +12,7 @@ const BrandList = observer(() =>  {
                 <div className="mb-2">Brand <span className="text-muted">{store?.brands?.length}</span></div>
                 <div style={{maxHeight: 200, overflowY: "auto"}}>
                     {store?.brands?.map(brand =>
-                        <BrandItem brand={brand}/>
+                        <BrandItem key={brand.id} brand={brand}/>
                     )}
                 </div>
             </div>

@@ -7,7 +7,7 @@ export default class DeviceStore {
         this._devices = [];
         this._searchQuery = "";
         this._selectedType = null;
-        this._selectedBrand = null;
+        this._selectedBrands = [];
         this._selectedMinPrice = 0;
         this._selectedMaxPrice = 100000;
         this._selectedPage = 1;
@@ -31,8 +31,8 @@ export default class DeviceStore {
     setSelectedType(type) {
         this._selectedType = type;
     }
-    setSelectedBrand(brand) {
-        this._selectedBrand = brand;
+    setSelectedBrands(brands) {
+        this._selectedBrands = brands;
     }
     setSelectedMinPrice(price) {
         this._selectedMinPrice = price;
@@ -64,8 +64,8 @@ export default class DeviceStore {
     get selectedType() {
         return this._selectedType;
     }
-    get selectedBrand() {
-        return this._selectedBrand;
+    get selectedBrands() {
+        return this._selectedBrands;
     }
     get selectedMinPrice() {
         return this._selectedMinPrice;
