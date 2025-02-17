@@ -2,19 +2,30 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Card, Col, Image} from "react-bootstrap";
 import star from '../../../assets/star.png';
 import filledGreenCart from '../../../assets/filled_green_cart.png';
+import filledHeart from '../../../assets/filled_heart.png';
 import greenCart from '../../../assets/green_cart.png';
+import heart from '../../../assets/heart.png';
 import {useNavigate} from 'react-router-dom';
 import {DEVICE_ROUTE} from "../../../utils/consts";
 import {addToBasket} from "../../../http/basketAPI";
+import {addToWishlist, deleteFromWishlist} from "../../../http/wishlistAPI";
 import {Context} from "../../../index";
 
 const DeviceItem = ({device}) => {
     const navigate = useNavigate();
-    const [clicked, setClicked] = useState(false);
-    const addToCart = async (e) => {
-        setClicked(true);
+    const [clickedCart, setClickedCart] = useState(false);
+    const [clickedHeart, setClickedHeart] = useState(false);
+    const handleCartChange = async (e) => {
+        setClickedCart(true);
         e.stopPropagation();
         await addToBasket(device.id);
+    }
+    const handleHeartChange = async (e) => {
+        e.stopPropagation();
+        const newValue = !clickedHeart;
+        setClickedHeart(newValue);
+        if (newValue) await addToWishlist(device.id);
+        if (!newValue) await deleteFromWishlist(device.id);
     }
     return (
             <Col md={3} className='mt-3 d-flex justify-content-center' onClick={() => navigate(DEVICE_ROUTE + `/${device.id}`)}>
@@ -39,12 +50,20 @@ const DeviceItem = ({device}) => {
                     <div>{device.name}</div>
                     <div className="d-flex justify-content-between">
                         <div className="start" style={{color: "green"}}>${device.price / 100}</div>
-                        <Image width={22}
-                               height={22}
-                               style={{cursor: "pointer"}}
-                               src={clicked ? filledGreenCart : greenCart}
-                               onClick={addToCart}
-                        />
+                        <div className="d-flex gap-2">
+                            <Image width={22}
+                                   height={22}
+                                   style={{cursor: "pointer"}}
+                                   src={clickedHeart ? filledHeart : heart}
+                                   onClick={handleHeartChange}
+                            />
+                            <Image width={22}
+                                   height={22}
+                                   style={{cursor: "pointer"}}
+                                   src={clickedCart ? filledGreenCart : greenCart}
+                                   onClick={handleCartChange}
+                            />
+                        </div>
                     </div>
                 </Card>
             </Col>

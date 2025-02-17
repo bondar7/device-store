@@ -12,13 +12,15 @@ class WishlistController {
             if (!deviceId) return next(ApiError.badRequest("Device ID is required"));
             const wishlist = await Wishlist.findOne({where: {userId}});
             if (!wishlist) return next(ApiError.badRequest("Wishlist not found"));
-            const device = await WishlistDevice.create(
-                {
-                    wishlistId: wishlist.id,
-                    deviceId: deviceId
-                }
-            );
-            return res.status(200).json(device);
+            if (!(await WishlistDevice.findOne({where: {deviceId, wishlistId: wishlist.id}}))) {
+                const device = await WishlistDevice.create(
+                    {
+                        wishlistId: wishlist.id,
+                        deviceId: deviceId
+                    }
+                );
+                return res.status(200).json(device);
+            }
         } catch (e) {
             return next(ApiError.internal("Something went wrong. Try again later."));
         }
@@ -26,8 +28,10 @@ class WishlistController {
     async delete(req, res, next) {
         try {
             const {deviceId} = req.params;
-            const wishlistDevice = await WishlistDevice.findOne({where: {deviceId}});
-            if (wishlistDevice) return next(ApiError.badRequest("Device not found"));
+            if (!deviceId) return next(ApiError.badRequest("Device ID is required"))
+            console.log(deviceId)
+            const wishlistDevice = await WishlistDevice.findOne({where: {deviceId: deviceId}});
+            if (!wishlistDevice) return next(ApiError.badRequest("Device not found"));
             await wishlistDevice.destroy();
             return res.json({ message: "Device removed from wishlist"});
         } catch (e) {
