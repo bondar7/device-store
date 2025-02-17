@@ -72,7 +72,7 @@ const DevicePage = observer(() => {
                         className='d-flex flex-column justify-content-around align-items-center'
                         style={{width: 300, height: 300, fontSize: 32, border: '2px solid light-grey'}}
                     >
-                        <h3>From {device.price}</h3>
+                        <h2 style={{color: 'green'}}>${device.price / 100}</h2>
                         <Button onClick={onAdd} variant='outline-dark'>Add to cart</Button>
                     </Card>
                 </Col>

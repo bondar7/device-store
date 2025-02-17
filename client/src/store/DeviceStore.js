@@ -8,6 +8,8 @@ export default class DeviceStore {
         this._searchQuery = "";
         this._selectedType = null;
         this._selectedBrand = null;
+        this._selectedMinPrice = 0;
+        this._selectedMaxPrice = 100000;
         this._selectedPage = 1;
         this._totalCount = 0;
         this._limit = 3;
@@ -31,6 +33,12 @@ export default class DeviceStore {
     }
     setSelectedBrand(brand) {
         this._selectedBrand = brand;
+    }
+    setSelectedMinPrice(price) {
+        this._selectedMinPrice = price;
+    }
+    setSelectedMaxPrice(price) {
+        this._selectedMaxPrice = price;
     }
     setSelectedPage(page) {
         this._selectedPage = page;
@@ -58,6 +66,12 @@ export default class DeviceStore {
     }
     get selectedBrand() {
         return this._selectedBrand;
+    }
+    get selectedMinPrice() {
+        return this._selectedMinPrice;
+    }
+    get selectedMaxPrice() {
+        return this._selectedMaxPrice;
     }
     get selectedPage() {
         return this._selectedPage;

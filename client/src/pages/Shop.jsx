@@ -7,13 +7,22 @@ import {Context} from "../index";
 import {fetchBrands, fetchDevices, fetchTypes} from "../http/deviceAPI";
 import Pages from "../components/Pages";
 import {observer} from "mobx-react-lite";
+import PriceRangeSelector from "../components/priceRangeSelector/priceRangeSelector";
 
 const Shop = observer(() => {
     const {store} = useContext(Context);
     useEffect(() => {
         fetchTypes().then(data => store.setTypes(data));
         fetchBrands().then(data => store.setBrands(data));
-        fetchDevices(store.searchQuery, store?.selectedBrand?.id, store?.selectedType?.id, store.limit, store.selectedPage)
+        fetchDevices(
+            store.searchQuery,
+            store?.selectedBrand?.id,
+            store?.selectedType?.id,
+            store.selectedMinPrice * 100,
+            store.selectedMaxPrice * 100,
+            store.limit,
+            store.selectedPage
+        )
             .then(data => {
             store.setDevices(data.rows);
             store.setTotalCount(data.count);
@@ -30,6 +39,7 @@ const Shop = observer(() => {
                 </Col>
                 <Col md={9}>
                     <BrandBar/>
+                    <PriceRangeSelector/>
                     <DeviceList/>
                     <Pages/>
                 </Col>

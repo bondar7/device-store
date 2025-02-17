@@ -19,6 +19,5 @@ export const createReview = async (newReview) => {
 }
 
 export const updateReview = async (reviewId, title, description, rating) => {
-    const {data} = await $makeAuthPut(`api/review/${reviewId}`, {title, description, rating});
-    return data;
+    return await $makeAuthPut(`api/review/${reviewId}`, {title, description, rating});
 }

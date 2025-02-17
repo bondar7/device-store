@@ -1,5 +1,7 @@
 const ApiError = require("../error/ApiError");
 const Review = require("../model/Review");
+const Device = require("../model/Device");
+const getAverageRating = require("../utils/sql/getAverageRating");
 
 class ReviewController {
     async create(req, res, next) {
@@ -21,6 +23,16 @@ class ReviewController {
                 deviceId,
                 rating
             });
+
+            const avgRating = await getAverageRating(deviceId);
+            await Device.update(
+                {
+                   rating: avgRating
+                },
+                {
+                    where: {id: deviceId}
+                }
+            );
             return res.status(200).json(review);
         } catch (e) {
             next(ApiError.internal(e.message));
@@ -72,6 +84,15 @@ class ReviewController {
                     where: {id: reviewId, userId: userId},
                     returning: true,    // Return the updated rows
                     plain: true         // Return a single object, not an array
+                }
+            );
+            const avgRating = await getAverageRating(updatedReview[1].deviceId);
+            await Device.update(
+                {
+                    rating: avgRating
+                },
+                {
+                    where: {id: updatedReview[1].deviceId}
                 }
             );
             console.log(updatedReview)
