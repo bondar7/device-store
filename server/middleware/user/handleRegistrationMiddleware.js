@@ -3,6 +3,7 @@ const User = require("../../model/User");
 const bcrypt = require("bcrypt");
 const uuid = require('uuid');
 const Basket = require("../../model/Basket");
+const Wishlist = require("../../model/Wishlist");
 const RefreshToken = require("../../model/RefreshToken");
 const JWT = require('../../utils/jwt/JWT');
 
@@ -21,6 +22,7 @@ module.exports = async (req, res, next) => {
             password: hashedPassword
         });
         await Basket.create({userId: createdUser.id});
+        await Wishlist.create({userId: createdUser.id})
         //create jwt tokens
         const accessToken = JWT.signAccessToken(createdUser.id, createdUser.username, createdUser.email, createdUser.roles);
         const refreshToken = JWT.signRefreshToken(createdUser.email);
