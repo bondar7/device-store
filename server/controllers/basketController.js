@@ -61,7 +61,7 @@ class BasketController {
         try {
             const {deviceId} = req.params;
             console.log(deviceId);
-            const basketDevice = await BasketDevice.findOne({where: {id: deviceId}});
+            const basketDevice = await BasketDevice.findOne({where: {deviceId: deviceId}});
             if (!basketDevice) return next(ApiError.badRequest("Device not found"));
             await basketDevice.destroy();
             return res.json({ message: "Device removed successfully"});

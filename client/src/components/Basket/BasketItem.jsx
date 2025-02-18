@@ -41,7 +41,7 @@ const BasketItem = observer(({item}) => {
     const onDelete = async () => {
         try {
             basket.deleteDevice(item.id);
-            await deleteFromBasket(item.id);
+            await deleteFromBasket(item.device.id);
         } catch (e) {
             console.log(e);
         }

@@ -7,7 +7,7 @@ import greenCart from '../../../assets/green_cart.png';
 import heart from '../../../assets/heart.png';
 import {useNavigate} from 'react-router-dom';
 import {DEVICE_ROUTE} from "../../../utils/consts";
-import {addToBasket} from "../../../http/basketAPI";
+import {addToBasket, deleteFromBasket} from "../../../http/basketAPI";
 import {addToWishlist, deleteFromWishlist} from "../../../http/wishlistAPI";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
@@ -18,9 +18,11 @@ const DeviceItem = observer(({device}) => {
     const [clickedCart, setClickedCart] = useState(false);
     const [clickedHeart, setClickedHeart] = useState(false);
     const handleCartChange = async (e) => {
-        setClickedCart(true);
         e.stopPropagation();
-        await addToBasket(device.id);
+        const newValue = !clickedCart;
+        setClickedCart(newValue);
+        if (newValue) await addToBasket(device.id);
+        if (!newValue) await deleteFromBasket(device.id);
     }
     const handleHeartChange = async (e) => {
         e.stopPropagation();

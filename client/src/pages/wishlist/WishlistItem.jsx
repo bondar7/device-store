@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {addToBasket} from "../../http/basketAPI";
+import {addToBasket, deleteFromBasket} from "../../http/basketAPI";
 import {addToWishlist, deleteFromWishlist} from "../../http/wishlistAPI";
 import {Card, Col, Image} from "react-bootstrap";
 import {DEVICE_ROUTE} from "../../utils/consts";
@@ -18,9 +18,11 @@ const WishlistItem = observer(({device}) => {
     const [clickedCart, setClickedCart] = useState(false);
     const [clickedHeart, setClickedHeart] = useState(true);
     const handleCartChange = async (e) => {
-        setClickedCart(true);
         e.stopPropagation();
-        await addToBasket(device.id);
+        const newValue = !clickedCart;
+        setClickedCart(newValue);
+        if (newValue) await addToBasket(device.id);
+        if (!newValue) await deleteFromBasket(device.id);
     }
     const handleHeartChange = async (e) => {
         e.stopPropagation();
