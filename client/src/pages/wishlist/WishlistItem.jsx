@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {addToBasket} from "../../http/basketAPI";
 import {addToWishlist, deleteFromWishlist} from "../../http/wishlistAPI";
@@ -13,7 +13,7 @@ import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
 
 const WishlistItem = observer(({device}) => {
-    const {wishlist} = useContext(Context);
+    const {wishlist, basket} = useContext(Context);
     const navigate = useNavigate();
     const [clickedCart, setClickedCart] = useState(false);
     const [clickedHeart, setClickedHeart] = useState(true);
@@ -32,6 +32,10 @@ const WishlistItem = observer(({device}) => {
             wishlist.removeDevice(device.id);
         }
     }
+    useEffect(() => {
+        const isInBasket = basket?.basket?.devices?.some(d => d.device.id === device.id);
+        setClickedCart(isInBasket);
+    }, [basket.basket.devices]);
     return (
         <Col md={2} className='mt-3 d-flex justify-content-center' onClick={() => navigate(DEVICE_ROUTE + `/${device.id}`)}>
             <Card style={{width: 150, cursor: 'pointer'}} border='light'>

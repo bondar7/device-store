@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
 import BasketList from "../components/Basket/BasketList";
 import BasketSummary from "../components/Basket/BasketSummary";
-import {getBasket} from "../http/basketAPI";
+import {fetchBasket} from "../http/basketAPI";
 import {Context} from "../index";
 import {observer} from "mobx-react-lite";
 
@@ -28,7 +28,7 @@ const Basket = observer(() => {
     }, []);
 
     useEffect(() => {
-        getBasket()
+        fetchBasket()
             .then(data => {
                 basket.setBasket(data);
                 console.log(basket.basket);

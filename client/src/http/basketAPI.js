@@ -2,7 +2,7 @@ import {$makeAuthPost} from "../utils/makeAuthPost";
 import {$makeAuthGet} from "../utils/makeAuthGet";
 import {$makeAuthRemove} from "../utils/makeAuthDelete";
 
-export const getBasket = async () => {
+export const fetchBasket = async () => {
     return await $makeAuthGet("api/basket");
 }
 

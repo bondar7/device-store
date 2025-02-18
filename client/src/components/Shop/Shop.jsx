@@ -9,9 +9,12 @@ import Pages from "../Pages";
 import {observer} from "mobx-react-lite";
 import PriceRangeSelector from "./SideBar/priceRangeSelector/priceRangeSelector";
 import SideBar from "./SideBar/SideBar";
+import {fetchWishlist} from "../../http/wishlistAPI";
+import {fetchBasket} from "../../http/basketAPI";
 
 const Shop = observer(() => {
     const {store} = useContext(Context);
+    const {wishlist, basket, user} = useContext(Context);
     useEffect(() => {
         fetchTypes().then(data => store.setTypes(data));
         fetchBrands().then(data => store.setBrands(data));
@@ -32,6 +35,19 @@ const Shop = observer(() => {
                 console.log(e);
             })
     },[store.selectedPage, store.searchQuery, store.selectedType, store.selectedBrands]);
+    useEffect(() => {
+        if (user.isAuth) {
+            fetchWishlist().then(data => {
+                wishlist.setDevices(data.devices);
+            }).catch(e => console.log(e));
+            fetchBasket().then(data => {
+                basket.setBasket(data);
+            }).catch(e => console.log(e));
+        } else {
+            wishlist.setDevices([]);
+            basket.setBasket({});
+        }
+    }, []);
     return (
         <Container>
             <Row className='mt-2'>
