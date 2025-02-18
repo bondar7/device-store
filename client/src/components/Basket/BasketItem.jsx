@@ -74,7 +74,7 @@ const BasketItem = observer(({item}) => {
                 </div>
             </Col>
             <Col className="text-right d-flex justify-content-around">
-                <div>${item?.device?.price}</div>
+                <div>${item?.device?.price / 100}</div>
                 <span onClick={onDelete} style={{cursor: 'pointer', color: '#999'}}>&#10005;</span>
             </Col>
         </div>
