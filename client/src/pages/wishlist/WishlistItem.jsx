@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {addToBasket} from "../../../http/basketAPI";
-import {addToWishlist, deleteFromWishlist} from "../../../http/wishlistAPI";
+import {addToBasket} from "../../http/basketAPI";
+import {addToWishlist, deleteFromWishlist} from "../../http/wishlistAPI";
 import {Card, Col, Image} from "react-bootstrap";
-import {DEVICE_ROUTE} from "../../../utils/consts";
-import star from "../../../assets/star.png";
-import filledHeart from "../../../assets/filled_heart.png";
-import heart from "../../../assets/heart.png";
-import filledGreenCart from "../../../assets/filled_green_cart.png";
-import greenCart from "../../../assets/green_cart.png";
+import {DEVICE_ROUTE} from "../../utils/consts";
+import star from "../../assets/star.png";
+import filledHeart from "../../assets/filled_heart.png";
+import heart from "../../assets/heart.png";
+import filledGreenCart from "../../assets/filled_green_cart.png";
+import greenCart from "../../assets/green_cart.png";
 import {observer} from "mobx-react-lite";
+import {Context} from "../../index";
 
 const WishlistItem = observer(({device}) => {
+    const {wishlist} = useContext(Context);
     const navigate = useNavigate();
     const [clickedCart, setClickedCart] = useState(false);
     const [clickedHeart, setClickedHeart] = useState(true);
@@ -25,10 +27,13 @@ const WishlistItem = observer(({device}) => {
         const newValue = !clickedHeart;
         setClickedHeart(newValue);
         if (newValue) await addToWishlist(device.id);
-        if (!newValue) await deleteFromWishlist(device.id);
+        if (!newValue) {
+            await deleteFromWishlist(device.id);
+            wishlist.removeDevice(device.id);
+        }
     }
     return (
-        <Col md={3} className='mt-3 d-flex justify-content-center' onClick={() => navigate(DEVICE_ROUTE + `/${device.id}`)}>
+        <Col md={2} className='mt-3 d-flex justify-content-center' onClick={() => navigate(DEVICE_ROUTE + `/${device.id}`)}>
             <Card style={{width: 150, cursor: 'pointer'}} border='light'>
                 <Image
                     src={process.env.REACT_APP_API_URL + device.img}

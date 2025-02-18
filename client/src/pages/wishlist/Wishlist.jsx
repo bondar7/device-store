@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
-import {Context} from "../../../index";
-import {fetchWishlist} from "../../../http/wishlistAPI";
+import {Context} from "../../index";
+import {fetchWishlist} from "../../http/wishlistAPI";
 import {observer} from "mobx-react-lite";
 import {Row} from "react-bootstrap";
 import WishlistItem from "./WishlistItem";
@@ -11,7 +11,6 @@ const Wishlist = observer(() => {
     useEffect(() => {
         fetchWishlist().then(data => {
             wishlist.setDevices(data.devices);
-            console.log(wishlist.devices);
         }).catch(e => console.log(e));
     }, []);
     return (

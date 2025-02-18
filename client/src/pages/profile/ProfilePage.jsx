@@ -2,7 +2,7 @@ import React from 'react';
 import {Col, Container, Nav, Row, Tab} from "react-bootstrap";
 import UserInfo from "./UserInfo";
 import {useNavigate} from "react-router-dom";
-import Wishlist from "./wishlist/Wishlist";
+import Wishlist from "../wishlist/Wishlist";
 import {observer} from "mobx-react-lite";
 
 const ProfilePage = observer(() => {
