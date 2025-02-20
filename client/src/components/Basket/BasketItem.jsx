@@ -41,13 +41,15 @@ const BasketItem = observer(({item}) => {
     const onDelete = async () => {
         try {
             basket.deleteDevice(item.id);
+            basket.calculateTotalQuantity();
+            basket.calculateTotal();
             await deleteFromBasket(item.device.id);
         } catch (e) {
             console.log(e);
         }
     }
     return (
-        <div className="d-flex align-items-center border-top border-bottom py-3">
+        <div className="d-flex align-items-center border-bottom py-3">
             <Col xs={2}>
                 <img
                     src={process.env.REACT_APP_API_URL + item?.device?.img}
@@ -74,7 +76,7 @@ const BasketItem = observer(({item}) => {
                 </div>
             </Col>
             <Col className="text-right d-flex justify-content-around">
-                <div>${item?.device?.price / 100}</div>
+                <div>${(item?.device?.price / 100) * item?.quantity}</div>
                 <span onClick={onDelete} style={{cursor: 'pointer', color: '#999'}}>&#10005;</span>
             </Col>
         </div>

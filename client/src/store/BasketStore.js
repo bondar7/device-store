@@ -35,7 +35,7 @@ export default class BasketStore {
     }
 
     calculateTotal() {
-        this._total = this._basket?.devices?.reduce((sum, item) => sum + item.device.price * item.quantity, 0);
+        this._total = this._basket?.devices?.reduce((sum, item) => sum + item.device.price * item.quantity, 0) / 100;
     }
     calculateTotalQuantity() {
         this._totalQuantity = this._basket?.devices?.reduce((sum, item) => sum + item.quantity, 0);

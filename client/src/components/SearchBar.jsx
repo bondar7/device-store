@@ -9,8 +9,9 @@ const SearchBar = () => {
         setValue(e.target.value);
         if (e.target.value === "") store.setSearchQuery("");
     }
-    const onSearch = () => {
-        store.setSearchQuery(value)
+    const onSearch = (e) => {
+        store.setSearchQuery(value);
+        e.preventDefault();
     }
     return (
         <Container style={{ maxWidth: 500 }}>

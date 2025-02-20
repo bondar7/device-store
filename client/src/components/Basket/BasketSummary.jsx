@@ -2,9 +2,16 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Button, Col, Row} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../index";
+import {useNavigate} from "react-router-dom";
+import {CHECKOUT_ROUTE} from "../../utils/consts";
 
 const BasketSummary = observer(({isColumnLayout}) => {
     const {basket} = useContext(Context);
+    const navigate = useNavigate();
+    const onCheckout = () => {
+        // if (basket?.basket?.devices?.length >= 1)
+            navigate(CHECKOUT_ROUTE);
+    }
     return (
         <Col
             md={4}
@@ -25,7 +32,7 @@ const BasketSummary = observer(({isColumnLayout}) => {
             <form>
                 <p>SHIPPING</p>
                 <select className="form-control mb-4" style={{backgroundColor: '#f7f7f7'}}>
-                    <option className="text-muted">Standard-Delivery- €5.00</option>
+                    <option className="text-muted">Standard-Delivery- $10.00</option>
                 </select>
 
                 <p>PROMO CODE</p>
@@ -44,7 +51,7 @@ const BasketSummary = observer(({isColumnLayout}) => {
                 <Col className="text-right">${basket.total}</Col>
             </Row>
 
-            <Button className="btn btn-dark w-100 mt-4" style={{fontSize: '0.7rem', padding: '1vh'}}>CHECKOUT</Button>
+            <Button onClick={onCheckout} className="btn btn-dark w-100 mt-4" style={{fontSize: '0.7rem', padding: '1vh'}}>CHECKOUT</Button>
         </Col>
     );
 });

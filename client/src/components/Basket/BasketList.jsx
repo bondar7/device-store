@@ -25,7 +25,7 @@ const BasketList = observer(({isColumnLayout}) => {
                 <div className="text-muted">{basket.totalQuantity >= 1 ? `${basket.totalQuantity} items` : "Cart is empty"}</div>
             </div>
 
-            <div style={{height: '350px', overflowY: 'auto'}}>
+            <div className="border-top" style={{height: '350px', overflowY: 'auto'}}>
                 {items.map(item => (
                     <BasketItem key={item.id} item={item}/>
                 ))}
