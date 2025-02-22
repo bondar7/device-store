@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: "http://localhost:3000", // Frontend URL
+        origin: "https://mystore.myftp.biz", // Frontend URL
         credentials: true, // Allow sending cookies
     })
 );
@@ -33,7 +33,7 @@ const start = async () => {
         await sequelize.authenticate(); // connect to database
         await sequelize.sync(); // compares db state with data schema
         setupAssociations(); // setup associations
-        app.listen(PORT, () => console.log("Server is running on port ", PORT ));
+        app.listen(PORT, '0.0.0.0', () => console.log("Server is running on port ", PORT ));
     } catch (e) {
         console.log(e);
     }

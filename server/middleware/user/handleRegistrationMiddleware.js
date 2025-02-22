@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
         const createdUser = await User.create({
             username: generateUniqueUsername(),
             email: email,
-            password: hashedPassword
+            password: hashedPassword,
         });
         await Basket.create({userId: createdUser.id});
         await Wishlist.create({userId: createdUser.id})

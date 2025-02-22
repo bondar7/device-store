@@ -18,6 +18,7 @@ const DevicePage = observer(() => {
     const [device, setDevice] = useState({info: []});
     const {user} = useContext(Context);
     const {review} = useContext(Context);
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768)
 
     const [isLoading, setIsLoading] = useState(false);
     const [totalPages, setTotalPages] = useState(0);
@@ -78,22 +79,24 @@ const DevicePage = observer(() => {
                     <Card
                         className='d-flex flex-column justify-content-between align-items-center p-4'
                         style={{
-                            width: '100%', // Ensure Card takes full width of its container
-                            height: 'auto', // Allow height to adjust based on content
-                            fontSize: 32,
+                            width: '100%',
+                            height: 'auto',
+                            fontSize: isSmallScreen ? 18 : 32, // Adjust font size for small screens
                             border: '2px solid light-grey'
                         }}
                     >
                         <div className="d-flex flex-column align-items-center">
                             <div>{device.name}</div>
                             <div className="mb-2">
-                                <MyStarFill rating={device.rating}/>
+                                <MyStarFill rating={device.rating} />
                             </div>
                             <div className="fs-5">{infoString}</div>
                         </div>
 
                         <div className="d-flex align-items-center flex-column">
-                        <h2 className="f-3" style={{color: 'green'}}>${device.price / 100}</h2>
+                            <h2 className="f-3" style={{ color: 'green', fontSize: isSmallScreen ? '18px' : '32px' }}>
+                                ${device.price / 100}
+                            </h2>
                             <Button className="fs-4" onClick={onAdd} variant='outline-dark'>Add to cart</Button>
                         </div>
                     </Card>

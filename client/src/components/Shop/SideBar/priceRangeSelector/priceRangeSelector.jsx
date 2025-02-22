@@ -119,7 +119,7 @@ function PriceRangeSelector() {
     }
 
     return (
-        <div style={{maxWidth: 310, borderTop: "1px solid lightgray"}}>
+        <div style={{maxWidth: 310}}>
             <div className="double-slider-box">
                 <div className="input-box">
                     <div className="min-box">

@@ -21,7 +21,7 @@ const getAverageRating = async (deviceId) => {
         }
 
         // Calculate average rating
-        const avgRating = totalRatings / count;
+        const avgRating = parseFloat((totalRatings / count).toFixed(1));
 
         return avgRating;
 

@@ -38,7 +38,9 @@ const UserInfo = () => {
                     height={120}
                     style={{cursor: "pointer"}}
                 />
-                <h5>{username}</h5>
+                <strong
+                    className="me-2">{username.length > 15 ? username.substring(0, 15) + '...' : username}
+                </strong>
             </div>
             <div className="d-flex justify-content-center">
                 <Form className="mt-4 d-flex gap-3 flex-column">

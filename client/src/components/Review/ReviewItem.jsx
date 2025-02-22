@@ -56,77 +56,83 @@ const ReviewItem = observer(({ review: item }) => {
         <Card className="mb-3 shadow-sm">
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex">
-                        <strong className="me-2">{item.username}</strong>
-                        <div className="d-flex align-items-center">
-                            {
-                                isEditing ? (
-                                    <Rating
-                                        style={{ maxWidth: 150 }} // Set max width for the Rating component
-                                        value={rating}            // Controlled value for the rating
-                                        onChange={(newRating) => setRating(newRating)} // Update the rating state when changed
+                    <div className="w-100">
+                        <div className="d-flex justify-content-between">
+                            <strong
+                                className="me-2">{item.username.length > 15 ? item.username.substring(0, 15) + '...' : item.username}
+                            </strong>
+                            <div className="d-flex gap-2">
+                                {isCreator && (
+                                    <img
+                                        width={28}
+                                        height={28}
+                                        src={isEditing ? saveIcon : editIcon}
+                                        alt=""
+                                        onClick={isEditing ? handleSave : handleEdit}
+                                        className="cursor-pointer"
+                                        role="button"
                                     />
-                                ) : (
-                                    // Render stars for viewing when not editing
-                                    [...Array(item.rating)].map((_, i) => (
-                                        <StarFill key={i} className="text-warning me-1" />
-                                    ))
-                                )
-                            }
-
+                                )}
+                                {(user.isAdmin || isCreator) && (
+                                    <img
+                                        width={25}
+                                        height={25}
+                                        src={deleteIcon}
+                                        alt="Delete"
+                                        onClick={handleDelete}
+                                        className="cursor-pointer"
+                                        role="button"
+                                    />
+                                )}
+                            </div>
                         </div>
-                    </div>
-                    <div className="d-flex gap-2">
-                        {isCreator && (
-                        <img
-                            width={28}
-                            height={28}
-                            src={isEditing ? saveIcon : editIcon}
-                            alt=""
-                            onClick={isEditing ? handleSave : handleEdit}
-                            className="cursor-pointer"
-                            role="button"
-                        />
-                    )}
-                        {(user.isAdmin || isCreator) && (
-                            <img
-                                width={25}
-                                height={25}
-                                src={deleteIcon}
-                                alt="Delete"
-                                onClick={handleDelete}
-                                className="cursor-pointer"
-                                role="button"
-                            />
-                        )}
+                        <div className="d-flex align-items-center justify-content-between">
+                            <div>
+                                {
+                                    isEditing ? (
+                                        <Rating
+                                            style={{maxWidth: 150}} // Set max width for the Rating component
+                                            value={rating}            // Controlled value for the rating
+                                            onChange={(newRating) => setRating(newRating)} // Update the rating state when changed
+                                        />
+                                    ) : (
+                                        // Render stars for viewing when not editing
+                                        [...Array(item.rating)].map((_, i) => (
+                                            <StarFill key={i} className="text-warning me-1"/>
+                                        ))
+                                    )
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {
-                isEditing ? (
-                    <>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            className="form-control mb-2"
-                        />
-                        <textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            className="form-control mb-2"
-                        />
-                    </>
-                ) : (
-                    <>
-                        <h5>{title}</h5>
-                        <Card.Text>{description}</Card.Text>
-                    </>
-                )
-            }
+                    isEditing ? (
+                        <>
+                            <input
+                                type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                className="form-control mb-2"
+                            />
+                            <textarea
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                className="form-control mb-2"
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <h5>{title}</h5>
+                            <Card.Text>{description}</Card.Text>
+                        </>
+                    )
+                }
 
-                <small className="text-muted">{format(new Date(item.updatedAt ? item.updatedAt : item.createdAt), 'MMMM dd, yyyy H:mm a')}</small>
-        </Card.Body>
-</Card>
+                <small
+                    className="text-muted">{format(new Date(item.updatedAt ? item.updatedAt : item.createdAt), 'MMMM dd, yyyy H:mm a')}</small>
+            </Card.Body>
+        </Card>
 )
     ;
 });

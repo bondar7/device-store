@@ -40,18 +40,20 @@ const DeviceItem = observer(({device}) => {
         setClickedCart(isInBasket);
     }, [basket.basket.devices]);
     return (
-            <Col md={3} className='mt-3 d-flex justify-content-center' onClick={() => navigate(DEVICE_ROUTE + `/${device.id}`)}>
-                <Card style={{width: 150, cursor: 'pointer'}} border='light'>
-                    <Image
-                        src={process.env.REACT_APP_API_URL + device.img}
-                        style={{
-                            maxWidth: 150,
-                            maxHeight: 150,
-                            width: "auto",
-                            height: "auto",
-                            objectFit: "contain"
-                        }}
-                    />
+            <Col md={4}  lg={3} className='mt-3 d-flex justify-content-center' onClick={() => navigate(DEVICE_ROUTE + `/${device.id}`)}>
+                <Card style={{width: "75%", minWidth: 150, display: 'flex', cursor: 'pointer'}} border='light'>
+                    <div className="d-flex w-100 justify-content-center">
+                        <Image
+                            src={process.env.REACT_APP_API_URL + device.img}
+                            style={{
+                                maxWidth: 150,
+                                maxHeight: 150,
+                                width: "auto",
+                                height: "auto",
+                                objectFit: "contain"
+                            }}
+                        />
+                    </div>
                     <div className='d-flex justify-content-between align-items-center'>
                         <div className='text-black-50'>{device.brandName ? device.brandName : 'Loading...'}</div>
                         <div className='d-flex justify-content-between align-items-center'>
