@@ -32,8 +32,8 @@ const NavBar = observer(() => {
     return (
         <Navbar bg="dark" data-bs-theme="dark" className="p-2">
             <Container className="p-0">
-                <NavLink style={{ color: 'white', textDecoration: 'none' }} to={SHOP_ROUTE}>
-                    Store
+                <NavLink className="fw-semibold fs-4" style={{ color: 'white', textDecoration: 'none' }} to={SHOP_ROUTE}>
+                    mDev
                 </NavLink>
                 {location.pathname === SHOP_ROUTE && (
                     <div className={styles.searchBar}>
