@@ -8,5 +8,6 @@ const {ROLES_LIST} = require('../middleware/jwt/verifyRolesMiddleware');
 router.post('/', authMiddleware, verifyRolesMiddleware(ROLES_LIST.Admin), deviceController.create);
 router.get('/', deviceController.getAll);
 router.get('/:id', deviceController.getById);
+router.delete('/:id', deviceController.removeById);
 
 module.exports = router;

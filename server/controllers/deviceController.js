@@ -78,16 +78,34 @@ class DeviceController {
     }
 
     async getById(req, res, next) {
-        const {id} = req.params;
-        if (!id) return next(ApiError.badRequest("ID is required!"));
-        const device = await Device.findOne(
-            {
-                where: {id},
-                include: [{model: DeviceInfo, as: "info"}]
-            }
-        );
-        console.log(device);
-       return res.json(device);
+        try {
+            const {id} = req.params;
+            if (!id) return next(ApiError.badRequest("ID is required!"));
+            const device = await Device.findOne(
+                {
+                    where: {id},
+                    include: [{model: DeviceInfo, as: "info"}]
+                }
+            );
+            console.log(device);
+            return res.json(device);
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
+        }
+
+    }
+
+    async removeById(req, res, next) {
+        try {
+            const {id} = req.params;
+            if (!id) return next(ApiError.badRequest("ID is required!"));
+            const device = await Device.findOne({where: {id}});
+            if (!device) return next(ApiError.badRequest("Not found"));
+            await device.destroy();
+            return res.json({message: "Review removed successfully"});
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
+        }
     }
 }
 
