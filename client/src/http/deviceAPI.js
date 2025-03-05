@@ -23,6 +23,10 @@ export const fetchDeviceById = async (id) => {
     return data;
 }
 
+export const deleteDeviceById = async (id) => {
+    const {data} = await $authHost()
+}
+
 export const createType = async (type) => {
     const {data} = await $makeAuthPost("api/type", {name: type});
     return data;
