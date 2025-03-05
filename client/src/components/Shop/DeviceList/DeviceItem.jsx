@@ -5,6 +5,7 @@ import filledGreenCart from '../../../assets/filled_green_cart.png';
 import filledHeart from '../../../assets/filled_heart.png';
 import greenCart from '../../../assets/green_cart.png';
 import heart from '../../../assets/heart.png';
+import deleteIcon from '../../../assets/delete.png';
 import {useNavigate} from 'react-router-dom';
 import {DEVICE_ROUTE} from "../../../utils/consts";
 import {addToBasket, deleteFromBasket} from "../../../http/basketAPI";
@@ -30,6 +31,10 @@ const DeviceItem = observer(({device}) => {
         setClickedHeart(newValue);
         if (newValue) await addToWishlist(device.id);
         if (!newValue) await deleteFromWishlist(device.id);
+    }
+    const handleDelete = async (e) => {
+        e.stopPropagation();
+
     }
     useEffect(() => {
         const isInWishlist = wishlist.devices.some(d => d.device.id === device.id);
@@ -65,6 +70,14 @@ const DeviceItem = observer(({device}) => {
                     <div className="d-flex justify-content-between mt-2">
                         <div className="start" style={{color: "green"}}>${device.price / 100}</div>
                         {user.isAuth && <div className="d-flex gap-2">
+                            {user.isAdmin &&
+                                <Image  width={22}
+                                        height={22}
+                                        style={{cursor: "pointer"}}
+                                        src={deleteIcon}
+                                        onClick={handleDelete}
+                                />
+                            }
                             <Image width={22}
                                    height={22}
                                    style={{cursor: "pointer"}}
