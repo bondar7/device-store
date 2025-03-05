@@ -52,7 +52,7 @@ const DevicePage = observer(() => {
     return (
         <Container className='mt-3'>
             <Row className="d-flex justify-content-center">
-                <Col xs={8} sm={6} md={5} lg={5} className="d-flex justify-content-center mb-3 align-items-center">
+                <Col xs={11} sm={6} md={5} lg={5} className="d-flex justify-content-center mb-3 align-items-center">
                     <Image
                         style={{
                             width: '100%',
@@ -65,7 +65,7 @@ const DevicePage = observer(() => {
                     />
                 </Col>
 
-                <Col xs={8} sm={6} md={5} lg={5} className="d-flex justify-content-center mb-3">
+                <Col xs={11} sm={6} md={5} lg={5} className="d-flex justify-content-center mb-3">
                     <Card
                         className='d-flex flex-column justify-content-between align-items-center p-4 shadow-sm'
                         style={{
