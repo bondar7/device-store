@@ -31,12 +31,10 @@ const UserInfo = () => {
     }
     return (
         <div className="p-5">
-            <div className="d-flex gap-4 align-items-center justify-content-center">
+            <div className="d-flex gap-3 align-items-center justify-content-center">
                 <Image
                     src={userIcon}
-                    width={120}
-                    height={120}
-                    style={{cursor: "pointer"}}
+                    style={{cursor: "pointer", maxWidth: 90, maxHeight: 90}}
                 />
                 <strong
                     className="me-2">{username.length > 15 ? username.substring(0, 15) + '...' : username}

@@ -16,9 +16,10 @@ import {deleteDeviceById} from "../../../http/deviceAPI";
 
 const DeviceItem = observer(({device}) => {
     const navigate = useNavigate();
-    const {wishlist, basket, user} = useContext(Context);
+    const {wishlist, basket, user, store} = useContext(Context);
     const [clickedCart, setClickedCart] = useState(false);
     const [clickedHeart, setClickedHeart] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
     const handleCartChange = async (e) => {
         e.stopPropagation();
         const newValue = !clickedCart;
@@ -35,8 +36,18 @@ const DeviceItem = observer(({device}) => {
     }
     const handleDelete = async (e) => {
         e.stopPropagation();
-        deleteDeviceById()
-    }
+        if (isDeleting) return; // Prevent multiple clicks
+
+        setIsDeleting(true); // Disable further clicks
+        try {
+            await deleteDeviceById(device.id);
+            store.setDevices([...store.devices.filter(d => d.id !== device.id)]); // update store
+        } catch (error) {
+            console.error("Failed to delete device:", error);
+        } finally {
+            setIsDeleting(false); // Re-enable button after request
+        }
+    };
     useEffect(() => {
         const isInWishlist = wishlist.devices.some(d => d.device.id === device.id);
         setClickedHeart(isInWishlist);
@@ -72,9 +83,9 @@ const DeviceItem = observer(({device}) => {
                         <div className="start" style={{color: "green"}}>${device.price / 100}</div>
                         {user.isAuth && <div className="d-flex gap-2">
                             {user.isAdmin &&
-                                <Image  width={22}
-                                        height={22}
-                                        style={{cursor: "pointer"}}
+                                <Image  width={20}
+                                        height={20}
+                                        style={{ cursor: isDeleting ? "not-allowed" : "pointer", opacity: isDeleting ? 0.5 : 1 }}
                                         src={deleteIcon}
                                         onClick={handleDelete}
                                 />

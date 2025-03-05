@@ -13,7 +13,7 @@ const app = express();
 
 app.use(
     cors({
-        origin: "https://mystore.myftp.biz", // Frontend URL
+        origin: ["https://mystore.myftp.biz", "http://localhost:3000"], // Frontend URL
         credentials: true, // Allow sending cookies
     })
 );

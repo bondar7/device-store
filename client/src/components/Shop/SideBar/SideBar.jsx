@@ -1,8 +1,10 @@
 import React from 'react';
-import {Container} from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import TypeList from "./TypeList/TypeList";
 import PriceRangeSelector from "./priceRangeSelector/priceRangeSelector";
 import BrandList from "./BrandList/BrandList";
+import SearchBar from "../../SearchBar";
+import styles from "../../../styles/SideBar.module.css";
 
 const SideBar = () => {
     return (
@@ -11,9 +13,10 @@ const SideBar = () => {
             borderRight: "1px solid lightgray",
             borderBottom: "1px solid lightgray",
         }}>
-            <TypeList/>
-            <BrandList/>
-            <PriceRangeSelector/>
+            <div className={styles.searchBar}><SearchBar /></div>
+            <TypeList />
+            <BrandList />
+            <PriceRangeSelector />
         </Container>
     );
 };
