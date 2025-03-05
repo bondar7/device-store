@@ -8,7 +8,8 @@ const ReviewList = observer(() => {
     const {review} = useContext(Context);
     const reviews = review?.reviews;
     return (
-        <Container>
+        <Container className="mt-4">
+            <div className="d-flex w-100 justify-content-center fw-semibold fs-3 mb-2">Reviews</div>
             {reviews?.map(review => <ReviewItem key={review.id} review={review}/>)}
         </Container>
     );

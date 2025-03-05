@@ -30,7 +30,7 @@ const ReviewForm = observer(({userId, deviceId}) => {
         }
     }
     return (
-        <Card className="m-3 mt-5">
+        <Card className="m-3 mt-5 shadow-sm" style={{ borderRadius: '10px' }}>
             <Card.Body>
                 <Form>
                     <Form.Group className="d-flex gap-3 flex-column align-items-center">

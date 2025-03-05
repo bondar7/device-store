@@ -11,6 +11,7 @@ const SideBar = () => {
         <Container className="p-0" style={{
             borderTop: "1px solid lightgray",
             borderRight: "1px solid lightgray",
+            borderLeft: "1px solid lightgray",
             borderBottom: "1px solid lightgray",
         }}>
             <div className={styles.searchBar}><SearchBar /></div>

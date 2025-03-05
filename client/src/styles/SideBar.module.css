@@ -7,5 +7,7 @@
         display: block;
         width: 100%;
         margin-top: 20px;
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 20px;
     }
 }

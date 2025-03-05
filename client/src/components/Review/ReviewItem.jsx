@@ -53,7 +53,7 @@ const ReviewItem = observer(({ review: item }) => {
         }).catch(e => console.log(e));
     }
     return (
-        <Card className="mb-3 shadow-sm">
+        <Card className="mb-3 shadow-sm" style={{ borderRadius: '10px' }}>
             <Card.Body>
                 <div className="d-flex align-items-center justify-content-between">
                     <div className="w-100">
@@ -87,7 +87,7 @@ const ReviewItem = observer(({ review: item }) => {
                             </div>
                         </div>
                         <div className="d-flex align-items-center justify-content-between">
-                            <div>
+                            <div className="mb-2">
                                 {
                                     isEditing ? (
                                         <Rating
