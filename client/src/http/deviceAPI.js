@@ -1,5 +1,6 @@
 import {$authHost, $host} from "./index";
 import {$makeAuthPost} from "../utils/makeAuthPost";
+import {$makeAuthRemove} from "../utils/makeAuthDelete";
 
 export const fetchTypes = async () => {
     const {data} = await $host.get("api/type");
@@ -24,7 +25,8 @@ export const fetchDeviceById = async (id) => {
 }
 
 export const deleteDeviceById = async (id) => {
-    const {data} = await $authHost()
+    const {data} = await $makeAuthRemove(`api/device/${id}`);
+    return data;
 }
 
 export const createType = async (type) => {

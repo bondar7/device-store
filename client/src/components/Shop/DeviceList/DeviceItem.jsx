@@ -12,6 +12,7 @@ import {addToBasket, deleteFromBasket} from "../../../http/basketAPI";
 import {addToWishlist, deleteFromWishlist} from "../../../http/wishlistAPI";
 import {observer} from "mobx-react-lite";
 import {Context} from "../../../index";
+import {deleteDeviceById} from "../../../http/deviceAPI";
 
 const DeviceItem = observer(({device}) => {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ const DeviceItem = observer(({device}) => {
     }
     const handleDelete = async (e) => {
         e.stopPropagation();
-
+        deleteDeviceById()
     }
     useEffect(() => {
         const isInWishlist = wishlist.devices.some(d => d.device.id === device.id);

@@ -1,4 +1,6 @@
 const Device = require('../model/Device');
+const BasketDevice = require('../model/BasketDevice');
+const WishlistDevice = require('../model/WishlistDevice');
 const DeviceInfo = require('../model/DeviceInfo');
 const ApiError = require('../error/ApiError');
 const uuid = require('uuid');
@@ -101,6 +103,11 @@ class DeviceController {
             if (!id) return next(ApiError.badRequest("ID is required!"));
             const device = await Device.findOne({where: {id}});
             if (!device) return next(ApiError.badRequest("Not found"));
+
+            // Remove all related basket and wishlist records
+            await BasketDevice.destroy({ where: { deviceId: id } });
+            await WishlistDevice.destroy({ where: { deviceId: id } });
+
             await device.destroy();
             return res.json({message: "Review removed successfully"});
         } catch (e) {
