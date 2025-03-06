@@ -9,7 +9,8 @@ A full-stack web application for browsing and purchasing devices, featuring auth
 - ✅ User authentication (registration & login)  
 - ✅ Admin panel for managing store  
 - ✅ Adding devices to the cart & favorites  
-- ✅ Category filtering & searching  
+- ✅ Category filtering & searching
+- ✅ Rating system
 - ✅ Responsive UI
 
   &nbsp;
