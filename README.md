@@ -57,7 +57,7 @@ A full-stack web application for browsing and purchasing devices, featuring auth
 
 ### **3️⃣  Set up environment variables**
 
-    Create .env files in both backend and frontend directories (example provided).
+    Create .env files in both server and client directories (example provided).
 
 ### **4️⃣ Run the backend**
 
