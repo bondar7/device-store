@@ -2,7 +2,7 @@
 # **Device Store** ![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)  
 
 A full-stack web application for browsing and purchasing devices, featuring authentication, admin management, and a cart system.  
-
+&nbsp;
 
 ## 🚀 **Features**  
 
@@ -10,7 +10,9 @@ A full-stack web application for browsing and purchasing devices, featuring auth
 - ✅ Admin panel for managing store  
 - ✅ Adding devices to the cart & favorites  
 - ✅ Category filtering & searching  
-- ✅ Responsive UI  
+- ✅ Responsive UI
+
+  &nbsp;
 
 ## 🛠 **Tech Stack**  
 
@@ -37,12 +39,12 @@ A full-stack web application for browsing and purchasing devices, featuring auth
 - [SSL](https://letsencrypt.org/) – Secure connections  
 - [Systemd](https://freedesktop.org/wiki/Software/systemd/) – Process management  
 
-
+&nbsp;
 ## 👤 **Author**  
 
 - **[@bondar7](https://github.com/bondar7)**  
 
-
+&nbsp;
 ## 🛠 **Installation**  
 
 ### **1️⃣ Clone the repository**  
